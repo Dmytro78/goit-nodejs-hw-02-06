@@ -4,9 +4,10 @@ async function getContactById(contactId) {
   const contacts = await getAll();
   const selectContact = contacts.find(({ id }) => id == contactId);
   if (!selectContact) {
-    throw new Error(`Contact with id=${contactId} not found`);
+    return null
   }
-  return console.table(selectContact);
+  return selectContact
+  // return console.table(selectContact);
 }
 
 module.exports = getContactById;
