@@ -1,15 +1,20 @@
-const update = require("./update");
-const getAll = require("./getAll");
+const update = require('./update')
+const listContacts = require('./listContacts')
 
-async function updateContact(contactId) {
-    const contacts = await getAll();
-    const idx = contacts.findIndex(({ id }) => id == contactId);
+const updateContact = async (id, updateInfo) => {
+  try {
+    const contacts = await listContacts()
+    const idx = contacts.findIndex(item => item.id === id)
     if (idx === -1) {
       return null
     }
-    const newContacts = contacts.filter(({ id }) => id != contactId);
-  await update(newContacts)
-  return contacts[idx]
+    contacts[idx] = { ...contacts[idx], ...updateInfo }
+    await update(contacts)
+    return contacts[idx]
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
 }
 
-module.exports = updateContact;
+module.exports = updateContact

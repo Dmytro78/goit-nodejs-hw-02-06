@@ -1,8 +1,8 @@
-const getAll = require("./getAll");
+const getAll = require('./getAll')
 
 async function getContactById(contactId) {
-  const contacts = await getAll();
-  const selectContact = contacts.find(({ id }) => id == contactId);
+  const contacts = await getAll()
+  const selectContact = contacts.find(({ id }) => id === contactId)
   if (!selectContact) {
     return null
   }
@@ -10,4 +10,4 @@ async function getContactById(contactId) {
   // return console.table(selectContact);
 }
 
-module.exports = getContactById;
+module.exports = getContactById

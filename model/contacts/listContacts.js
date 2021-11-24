@@ -1,5 +1,5 @@
-const fs = require('fs').promises;
-const contactsPath = require("./contactsPath");
+const fs = require('fs').promises
+const contactsPath = require('./contactsPath')
 
 const listContacts = async () => {
   try {
@@ -11,18 +11,5 @@ const listContacts = async () => {
     throw error
   }
 }
-// const getAll = require("./getAll");
 
-// async function listContacts() {
-//     const contacts = await getAll();
-//     const list = contacts.map(({ name, phone, email }) => {
-//       return {
-//         name,
-//         phone,
-//         email,
-//       };
-//     });
-//     // console.table(list);
-// }
-
-module.exports = listContacts;
+module.exports = listContacts
