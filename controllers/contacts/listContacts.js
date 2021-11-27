@@ -1,12 +1,12 @@
-const contactsOperations = require('../../model/contacts')
+const Contact = require('../../models/contact')
 
-const listContacts = async (req, res, next) => {
+const addContact = async (req, res, next) => {
   try {
-    const contacts = await contactsOperations.listContacts()
-    res.json({ contacts })
+    const contacts = await Contact.find(req.body)
+    res.status(201).json({ contacts })
   } catch (error) {
     next(error)
   }
 }
 
-module.exports = listContacts
+module.exports = addContact
