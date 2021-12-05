@@ -1,5 +1,8 @@
 const { Conflict } = require('http-errors')
+const bcrypt = require('bcryptjs')
+
 const { User } = require('../../models')
+
 
 const signUp = async (req, res) => {
   const { email, password, subscription} = req.body
@@ -7,7 +10,8 @@ const signUp = async (req, res) => {
   if (user) {
     throw new Conflict('Email in use')
   }
-  const result = await User.create({ email, password, subscription })
+  const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(8))
+  const result = await User.create({ email, password: hashPassword, subscription })
   res.status(201).json({
     user: {
       email,
