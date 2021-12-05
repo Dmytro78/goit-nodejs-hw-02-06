@@ -1,4 +1,6 @@
 const Joi = require('joi')
+const bcrypt = require('bcryptjs')
+
 const { Schema, model } = require('mongoose')
 
 const emailRegexp =
@@ -21,15 +23,19 @@ const userSchema = Schema({
     enum: ['starter', 'pro', 'business'],
     default: 'starter',
   },
-  // token: {
-  //   type: String,
-  //   default: null,
-  // },
+  token: {
+    type: String,
+    default: null,
+  },
   // owner: {
   //   type: SchemaTypes.ObjectId,
   //   ref: 'user',
   // },
 }, { versionKey: false, timestamps: true })
+
+userSchema.methods.comparePassword = function(password) {
+  return bcrypt.compareSync(password, this.password)
+}
 
 const User = model('user', userSchema)
 
@@ -37,12 +43,8 @@ const joiUserSchema = Joi.object({
   password: Joi.string().min(8).required(),
   email: Joi.string().pattern(emailRegexp).required(),
   subscription: Joi.string(),
-// {
-//     type: String,
-//     enum: ['starter', 'pro', 'business'],
-//     default: 'starter'
-//   },
-//   token: Joi.string {
+  token: Joi.string()
+  //  {
 //     type: String,
 //     default: null,
 //   },
