@@ -12,17 +12,18 @@ const login = async (req, res) => {
   if (!user || !user.comparePassword(password)) {
     throw new Unauthorized('Email or password is wrong')
   }
-  //   if (!user) {
-  //     throw new Unauthorized('Email is wrong')
-  //   }
-  //   const passCompare = bcrypt.compareSync(password, user.password)
-  //   if (!passCompare) {
-  //     throw new Unauthorized('Password is wrong')
-  //   }
+  // if (!user) {
+  //   throw new Unauthorized('Email is wrong')
+  // }
+  // const passCompare = bcrypt.compareSync(password, user.password)
+  // if (!passCompare) {
+  //   throw new Unauthorized('Password is wrong')
+  // }
   const payload = {
     id: user._id
   }
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' })
+  await User.findByIdAndUpdate(user._id, { token })
   res.json({
     token: token,
     user: {

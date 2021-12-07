@@ -27,10 +27,6 @@ const userSchema = Schema({
     type: String,
     default: null,
   },
-  // owner: {
-  //   type: SchemaTypes.ObjectId,
-  //   ref: 'user',
-  // },
 }, { versionKey: false, timestamps: true })
 
 userSchema.methods.comparePassword = function(password) {
@@ -42,19 +38,16 @@ const User = model('user', userSchema)
 const joiUserSchema = Joi.object({
   password: Joi.string().min(8).required(),
   email: Joi.string().pattern(emailRegexp).required(),
-  subscription: Joi.string(),
-  token: Joi.string()
-  //  {
-//     type: String,
-//     default: null,
-//   },
-//   owner: {
-//     type: SchemaTypes.ObjectId,
-//     ref: 'user',
-//   },
+  subscription: Joi.string().valid('starter', 'pro', 'business'),
+  token: Joi.string(),
+})
+
+const subJoiSchema = Joi.object({
+  subscription: Joi.string().valid('starter', 'pro', 'business').required()
 })
 
 module.exports = {
   User,
-  joiUserSchema
+  joiUserSchema,
+  subJoiSchema
 }
