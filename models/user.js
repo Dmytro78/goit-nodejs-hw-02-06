@@ -27,6 +27,10 @@ const userSchema = Schema({
     type: String,
     default: null,
   },
+  avatarURL: {
+    type: String,
+    require: true,
+  },
 }, { versionKey: false, timestamps: true })
 
 userSchema.methods.comparePassword = function(password) {
@@ -40,6 +44,7 @@ const joiUserSchema = Joi.object({
   email: Joi.string().pattern(emailRegexp).required(),
   subscription: Joi.string().valid('starter', 'pro', 'business'),
   token: Joi.string(),
+  avatarURL: Joi.string().required(),
 })
 
 const subJoiSchema = Joi.object({
