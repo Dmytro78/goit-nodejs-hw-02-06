@@ -14,4 +14,7 @@ router.post('/logout', authorization, validation(joiUserSchema), ctrlWrapper(ctr
 // router.post('/signout')
 router.patch('/', validation(subJoiSchema), ctrlWrapper(ctrl.updateSubscription))
 router.patch('/avatars', authorization, upload.single('avatar'), ctrlWrapper(ctrl.updateAvatar))
+router.get('/verify/:verificationToken', ctrlWrapper(ctrl.verifyEmail))
+router.post('/verify', validation(joiUserSchema), ctrlWrapper(ctrl.reSending))
+
 module.exports = router
